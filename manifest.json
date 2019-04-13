@@ -1,0 +1,12 @@
+{
+  "manifest_version": 1,
+  "version": "1.0.0",
+  "name": "OffApp",
+  "short_name": "OffApp",
+  "description": "This is an offline app test",
+  "default_locale": "fr",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#121738",
+  "theme_color": "#d17c78"
+}

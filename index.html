@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel= "manifest" href= "/manifest.json">
+</head>
+<body>
+  <h1>Test offline</h1>
+  <button id="refresh">refresh cache</button>
+
+  <br>
+
+  <a href="page2.html">Page 2</a>
+
+  <br>
+
+  <img src="images/1.jpg" width="200">
+  <img src="images/2.jpg" width="200">
+  <img src="images/3.jpg" width="200">
+  <img src="images/4.jpg" width="200">
+
+  <button id="action">Click me !</button>
+
+  <script>
+    if (navigator.onLine === false) {
+      console.log("you sucessfully display the page offline")
+    }
+    window.addEventListener('offline', function() {
+      console.log("offline")
+    })
+    window.addEventListener('online', function() {
+      console.log("online")
+    })
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js')
+      .then(function(registration) {
+        console.log('Registered:', registration);
+      })
+      .catch(function(error) {
+        console.log('Registration failed: ', error);
+      });
+    }
+
+    document.getElementById('refresh').addEventListener('click', function(){
+      console.log("Updating...")
+      caches.keys().then(function(keyList) {
+        return Promise.all(keyList.map(function(key) {
+          console.log("delete " + key)
+          return caches.delete(key);
+        }));
+      }).then(function(){
+        console.log("Done, reloading page")
+        window.location.reload(true);
+      })
+    });
+    document.getElementById('action').addEventListener('click', function(){
+      alert("button clicked, js is working");
+    });
+
+
+
+  </script>
+
+
+
+</body>
+</html>
